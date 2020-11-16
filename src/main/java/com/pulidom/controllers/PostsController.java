@@ -1,8 +1,12 @@
 package com.pulidom.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +22,17 @@ public class PostsController {
 	private PostService postService;
 	
 	@GetMapping
-	public String getPosts() {
-		return "Get Posts";
+	public List<Post> getPosts() {
+		return postService.getAllPosts();
+	}
+	
+	@GetMapping("/{id}")
+	public Post getPostById(@PathVariable Long id) {
+		return postService.getPostById(id);
 	}
 	
 	@PostMapping
-	public Post addPost(final PostRequest post) {
+	public Post addPost(@RequestBody final PostRequest post) {
 		return postService.savePost(post);
 	}
 	
